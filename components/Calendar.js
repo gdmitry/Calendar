@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from 'semantic-ui-react';
 // import { EventsTable } from "./EventsTable";
 // import { Controls } from "./Controls";
 
@@ -7,11 +8,15 @@ export class Calendar extends React.Component {
         super(props);
 
     }
-
+    click(e) {
+        console.log(e);
+    }
     render() {
         return (
             <div>
-                <Rating rating={1} maxRating={5} />
+                <Button onClick="click()">
+                    Click Here
+                </Button>
             </div>
         );
     }
