@@ -1,0 +1,29 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "init": "npm install live-server -g",
+    "build": "webpack",
+    "dev": "webpack -w",
+    "start": "live-server --port=8000 --open=build --ignore=build"
+  },
+  "dependencies": {
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "jquery": "3.2.1",
+    "lodash": "^4.17.4",
+    "semantic-ui": "2.2.10"
+  },
+  "devDependencies": {
+    "webpack": "2.4.1",
+    "babel-core": "6.24.1",
+    "babel-loader": "7.0.0",
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "^6.24.1",
+    "path": "0.12.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
