@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        "react":"./app.js"
+        "react": "./app.js"
     },
     output: {
         path: path.resolve(__dirname, "build"), // string
@@ -18,6 +18,18 @@ module.exports = {
                 exclude: "/node_modules/",
                 query: {
                     presets: ["es2015", "react"]
+                }
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader'
+            },
+            {
+                test: /\.css$/,
+                loader: 'css-loader',
+                query: {
+                    modules: true,
+                    localIdentName: '[name]__[local]___[hash:base64:5]'
                 }
             }
 
@@ -34,6 +46,6 @@ module.exports = {
     ],
     devtool: "source-map",
     resolve: {
-        extensions: [".js", ".json", ".jsx"]
+        extensions: [".js", ".json", ".jsx",".css"]
     }
 }
