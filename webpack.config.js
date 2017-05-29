@@ -1,6 +1,7 @@
 const path = require("path");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -32,7 +33,6 @@ module.exports = {
                     localIdentName: '[name]__[local]___[hash:base64:5]'
                 }
             }
-
         ]
     },
     plugins: [
@@ -41,11 +41,12 @@ module.exports = {
         //     sourceMap: true
         // }),
         CopyWebpackPlugin([
-            { from: "./index.html" }
-        ])
+            { from: "./index.html" },
+            { from: "./css/*" }         
+        ])       
     ],
     devtool: "source-map",
     resolve: {
-        extensions: [".js", ".json", ".jsx",".css"]
+        extensions: [".js", ".json", ".jsx", ".css"]
     }
 }

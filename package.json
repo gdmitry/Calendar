@@ -5,27 +5,29 @@
   "scripts": {
     "init": "npm install live-server -g",
     "build": "webpack",
-    "dev": "webpack -w",
-    "start": "live-server --port=8000 --open=build --ignore=build"
+    "watch": "webpack -w",
+    "start": "live-server --port=8000 --open=build --ignore=build",
+    "dev": "npm run watch && npm run start"
   },
   "dependencies": {
-    "css-loader": "^0.28.3",
     "jquery": "3.2.1",
     "lodash": "^4.17.4",
     "react": "15.5.4",
     "react-dom": "15.5.4",
     "semantic-ui-react": "^0.68.4",
+    "css-loader": "^0.28.3",
     "style-loader": "^0.18.1"
   },
   "devDependencies": {
-    "webpack": "2.4.1",
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0",
     "babel-preset-es2015": "latest",
     "babel-preset-react": "^6.24.1",
-    "path": "0.12.7",
     "copy-webpack-plugin": "^4.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "path": "0.12.7",
     "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack": "2.4.1",
     "webpack-dev-server": "^1.16.2"
   }
 }
