@@ -1,13 +1,28 @@
 {
     "time": {
         "zone": "",
-        "format": ""
+        "format": "",
+        "scales": [
+            {
+                "label": "4Days",
+                "delta": 4
+            },
+            {
+                "label": "Today",
+                "delta": 1
+            },
+            {
+                "label": "Week",
+                "delta": 7
+            }
+        ]
     },
     "events": [
         {
-            "name":"",
-            "startTime": "",
-            "duration": ""
+            "name": "Dogscience",
+            "date": "2016-01-01",
+            "startTime": "23:20",
+            "duration": "1:30"
         }
     ]
 }

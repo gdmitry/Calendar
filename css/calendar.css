@@ -1,13 +1,13 @@
 .calendar {
   display: block;
   width: 1000px;
-  color: blue;
   margin: 0 auto;
-  padding: 50px 10px;
+  padding: 20px 10px;
   background: #fff;
 }
 
 #app {
+  min-height: 100%;
   background: #94A1A6;
 }
 

@@ -2,7 +2,6 @@ Install live server for dev:
 
 - npm install live-server -g 
 
-
 React UI:
 https://react.semantic-ui.com/introduction
 http://javascriptplayground.com/blog/2016/07/css-modules-webpack-react/
@@ -11,3 +10,6 @@ https://github.com/css-modules/webpack-demo
 
 Flexbox: 
 https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
+Moment.js
+https://momentjs.com/guides/

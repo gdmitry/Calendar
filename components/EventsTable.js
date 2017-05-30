@@ -1,35 +1,45 @@
 import React from "react";
 import _ from "lodash";
 
+const timeLabels = () => {
+    let labels = _.chain(_.range(24))
+        .map(String)
+        .map((l) => l + ":00")
+        .value();
+
+    return labels;
+}
+
+const timeRange = timeLabels();
+const dateRange = [1, 1, 25, 5,45, 4545,45];
+
 export class EventsTable extends React.Component {
-    render() {
+    renderRow(data) {
+
+    }
+
+    render() {            
 
         return (
             <table className="ui celled table">
                 <thead className="">
                     <tr className="">
-                        <th className="">Header</th>
-                        <th className="">Header</th>
-                        <th className="">Header</th>
+                        <th className=""></th>
+                        {dateRange.map((date, j) => {
+                            return <th className="" key={j}>Header</th>
+                        })}
                     </tr>
                 </thead>
                 <tbody className="">
-                    <tr className="">
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                    </tr>
-                    <tr className="">
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                    </tr>
-                    <tr className="">
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                        <td className="">Cell</td>
-                    </tr>
-                </tbody>                
+                    {timeRange.map((time, i) => {
+                        return <tr className="" key={i}>
+                            <td className="">{time}</td>
+                            {dateRange.map((date, j) => {
+                                return <td className="" key={i + j}>Cell</td>
+                            })}
+                        </tr>
+                    })}
+                </tbody>
             </table>
         );
     }

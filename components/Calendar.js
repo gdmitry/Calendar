@@ -1,4 +1,6 @@
 import React from "react";
+import moment from "moment";
+
 import { Button } from 'semantic-ui-react';
 import styles from '../css/calendar.css';
 
@@ -11,11 +13,10 @@ export class Calendar extends React.Component {
         super(props);
         this.state = {
             time: {
-                scale: "4Days"
+                label: "4Days",
+                delta: 4
             },
-            activeEvents: [
-
-            ],
+            activeEvents: [],
             currentIndex: 0
         };
         this.setCurrentIndex = this.setCurrentIndex.bind(this);
@@ -25,11 +26,27 @@ export class Calendar extends React.Component {
         this.setState({
             currentIndex: num
         });
+        this.filterEvents();
+    }
+
+    filterEvents() {
+        var startDate = moment();
+        var endDate = startDate + delta;
+        var eventsToFilter = this.props.data.events;
+
+        var filteredEvents = eventsToFilter.filter((event) => {
+            return moment(event.startDate) > startDate;
+        });
+
+        this.setState({
+            activeEvents: filteredEvents
+        });
     }
 
     render() {
         return (
             <div className="calendar">
+                <h2 className="ui header no-anchor" id="types" style={{ marginBottom: "1em" }}>Calendar</h2>
                 <header className="controls">
                     <Navigation navStack={this.state.activeEvents} stackIndex={this.state.currentIndex} updateIndex={this.setCurrentIndex} />
                     <ViewControls />
