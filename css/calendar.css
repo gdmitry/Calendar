@@ -3,9 +3,11 @@
   width: 1000px;
   color: blue;
   margin: 0 auto;
-  padding: 10px 0;
+  padding: 50px 10px;
+  background: #fff;
 }
 
-.left {
-
+#app {
+  background: #94A1A6;
 }
+
