@@ -6,6 +6,10 @@
   background: #fff;
 }
 
+.calendar .header{
+   margin-bottom: "1em";
+}
+
 #app {
   min-height: 100%;
   background: #94A1A6;

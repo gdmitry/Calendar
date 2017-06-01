@@ -4,55 +4,92 @@ import moment from "moment";
 import { Button } from 'semantic-ui-react';
 import styles from '../css/calendar.css';
 
-import { EventsTable } from "./EventsTable";
+import { Table } from "./Table";
 import { Navigation } from "./Navigation";
 import { ViewControls } from "./ViewControls";
+
+const timeRange = _.chain(_.range(24))
+    .map(String)
+    .map((l) => l + ":00")
+    .value();
 
 export class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: {
-                label: "4Days",
-                delta: 4
-            },
+            selectedViewId: 'day',
             activeEvents: [],
-            currentIndex: 0
+            date: moment()
         };
-        this.setCurrentIndex = this.setCurrentIndex.bind(this);
+        this.updateViewType = this.updateViewType.bind(this);
+        this.navigate = this.navigate.bind(this);
     }
 
-    setCurrentIndex(num) {
+    navigate(steps) {
+        console.log("Steps: ", steps);
+        let newDate;
+
+        if (steps > 0) {
+            newDate = this.state.date.add(1, 'days');
+        } else {
+            newDate = this.state.date.subtract(1, 'days');
+        }
+
         this.setState({
-            currentIndex: num
+            date: newDate
         });
-        this.filterEvents();
     }
 
-    filterEvents() {
-        var startDate = moment();
-        var endDate = startDate + delta;
-        var eventsToFilter = this.props.data.events;
+    // filterEvents() {
+    //     var startDate = moment();
+    //     var endDate = startDate + delta;
+    //     var eventsToFilter = this.props.data.events;
 
-        var filteredEvents = eventsToFilter.filter((event) => {
-            return moment(event.startDate) > startDate;
-        });
+    //     var filteredEvents = eventsToFilter.filter((event) => {
+    //         return moment(event.startDate) > startDate;
+    //     });
 
+    //     this.setState({
+    //         activeEvents: filteredEvents
+    //     });
+    // }
+
+    updateViewType(view) {
+        console.log("Change view: ", view.name);
         this.setState({
-            activeEvents: filteredEvents
+            selectedViewId: view.id
         });
+    }
+
+    getDayView() {
+        let tableData = {
+            header: [this.state.date.format('dddd, MMM Do, YYYY')],
+            columns: timeRange,
+            rows: [1]
+        };
+
+        return <Table data={tableData} />;
     }
 
     render() {
+        let view;
+
+        switch (this.state.selectedViewId) {
+            case 'day': view = this.getDayView(); break;
+            case 'month': view = this.getMonthView(); break;
+            case 'year': view = this.getYearView(); break;
+            default: view = '';
+        }
+
         return (
             <div className="calendar">
-                <h2 className="ui header no-anchor" id="types" style={{ marginBottom: "1em" }}>Calendar</h2>
+                <h2 className="ui header no-anchor">Calendar</h2>
                 <header className="controls">
-                    <Navigation navStack={this.state.activeEvents} stackIndex={this.state.currentIndex} updateIndex={this.setCurrentIndex} />
-                    <ViewControls />
+                    <Navigation navigate={this.navigate} canBack={true} canForward={true} />
+                    <ViewControls viewId={this.state.selectedViewId} setView={this.updateViewType} />
                 </header>
                 <main>
-                    <EventsTable />
+                    {view}
                 </main>
             </div>
         );

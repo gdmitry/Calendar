@@ -1,24 +1,15 @@
 import React from "react";
 import _ from "lodash";
 
-const timeLabels = () => {
-    let labels = _.chain(_.range(24))
-        .map(String)
-        .map((l) => l + ":00")
-        .value();
+const timeRange = _.chain(_.range(24))
+    .map(String)
+    .map((l) => l + ":00")
+    .value();
 
-    return labels;
-}
-
-const timeRange = timeLabels();
-const dateRange = [1, 1, 25, 5,45, 4545,45];
+const dateRange = [1, 1, 25, 5, 45, 4545, 45];
 
 export class EventsTable extends React.Component {
-    renderRow(data) {
-
-    }
-
-    render() {            
+    render() {
 
         return (
             <table className="ui celled table">
