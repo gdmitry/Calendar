@@ -1,10 +1,14 @@
 import React from "react";
 import moment from "moment";
+import config from "../data/config";
 
 import { Button } from 'semantic-ui-react';
 import styles from '../css/calendar.css';
 
-import { Table } from "./Table";
+import { DayView } from "./views/DayView";
+import { WeekView } from "./views/WeekView";
+import { MonthView } from "./views/MonthView";
+import { YearView } from "./views/YearView";
 import { Navigation } from "./Navigation";
 import { ViewControls } from "./ViewControls";
 
@@ -17,79 +21,88 @@ export class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedViewId: 'day',
+            selectedView: _.find(config.views, view => view.id === 'day'),
             activeEvents: [],
             date: moment()
         };
         this.updateViewType = this.updateViewType.bind(this);
         this.navigate = this.navigate.bind(this);
+        this.setToday = this.setToday.bind(this);
     }
 
     navigate(steps) {
-        console.log("Steps: ", steps);
-        let newDate;
+        let view = this.state.selectedView;
+        let newDate = this.state.date.clone()[steps > 0 ? 'add' : 'subtract'](view.amount, view.measure);
 
-        if (steps > 0) {
-            newDate = this.state.date.add(1, 'days');
-        } else {
-            newDate = this.state.date.subtract(1, 'days');
-        }
-
-        this.setState({
-            date: newDate
+        this.setState(function (prevState) {
+            return {
+                date: newDate,
+                activeEvents: this.filterEvents(prevState.selectedView, newDate)
+            };
         });
     }
 
-    // filterEvents() {
-    //     var startDate = moment();
-    //     var endDate = startDate + delta;
-    //     var eventsToFilter = this.props.data.events;
+    setToday() {
+        let newDate = moment();
+        this.setState(function (prevState) {
+            return {
+                date: newDate,
+                activeEvents: this.filterEvents(prevState.selectedView, newDate)
+            };
+        });
+    }
 
-    //     var filteredEvents = eventsToFilter.filter((event) => {
-    //         return moment(event.startDate) > startDate;
-    //     });
-
-    //     this.setState({
-    //         activeEvents: filteredEvents
-    //     });
-    // }
+    filterEvents(view, startDate) {
+        let endDate = startDate.clone().add(view.amount, view.measure);
+        let eventsToFilter = config.events;
+        let filteredEvents = eventsToFilter.filter((event) => {
+            let eventStartDate = moment(event.startDate);
+            return eventStartDate > startDate && eventStartDate < endDate;
+        });
+        console.log(filteredEvents);
+        return filteredEvents;
+    }
 
     updateViewType(view) {
         console.log("Change view: ", view.name);
-        this.setState({
-            selectedViewId: view.id
+        this.setState(function (prevState) {
+            return {
+                selectedView: view,
+                activeEvents: this.filterEvents(view, prevState.date)
+            };
         });
     }
 
-    getDayView() {
-        let tableData = {
-            header: [this.state.date.format('dddd, MMM Do, YYYY')],
-            columns: timeRange,
-            rows: [1]
-        };
-
-        return <Table data={tableData} />;
-    }
-
     render() {
-        let view;
+        let currrentView;
+        let date = this.state.date.format('dddd, MMM Do, YYYY');
 
-        switch (this.state.selectedViewId) {
-            case 'day': view = this.getDayView(); break;
-            case 'month': view = this.getMonthView(); break;
-            case 'year': view = this.getYearView(); break;
-            default: view = '';
+        switch (this.state.selectedView.id) {
+            case 'day':
+                currrentView = <DayView date={date} axisX={[1]} axisY={timeRange} />;
+                break;
+            case 'week':
+                currrentView = <WeekView date={date} axisX={[1]} axisY={timeRange} />;
+                break;
+            case 'month':
+                currrentView = <MonthView date={date} axisX={[1]} axisY={timeRange} />;
+                break;
+            case 'year':
+                currrentView = <YearView date={date} axisX={[1]} axisY={timeRange} />;
+                break;
+            default:
+                currrentView = '';
         }
 
         return (
             <div className="calendar">
                 <h2 className="ui header no-anchor">Calendar</h2>
                 <header className="controls">
-                    <Navigation navigate={this.navigate} canBack={true} canForward={true} />
-                    <ViewControls viewId={this.state.selectedViewId} setView={this.updateViewType} />
+                    <Navigation navigate={this.navigate} resetDate={this.setToday} />
+                    <ViewControls viewId={this.state.selectedView.id} setView={this.updateViewType} />
                 </header>
                 <main>
-                    {view}
+                    {currrentView}
                 </main>
             </div>
         );

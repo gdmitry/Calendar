@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Table } from "../Table";
 
-export class MonthView extends React.Component {
+export class YearView extends React.Component {
     constructor(props) {
         super(props);
     }

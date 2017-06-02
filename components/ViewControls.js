@@ -1,25 +1,7 @@
 import React from "react";
 import _ from 'lodash';
 import $ from 'jquery';
-
-const VIEWS = [
-    {
-        id: 'day',
-        name: 'Day'
-    },
-    {
-        id: '4days',
-        name: '4Days'
-    },
-    {
-        id: 'week',
-        name: 'Week'
-    },
-    {
-        id: 'month',
-        name: 'Month'
-    }
-];
+import  config  from "../data/config";
 
 export class ViewControls extends React.Component {
     constructor(props) {
@@ -38,14 +20,14 @@ export class ViewControls extends React.Component {
         buttonElement.addClass('active');
 
         let viewName = buttonElement.text();
-        let view = _.find(VIEWS, view => view.name === viewName);
+        let view = _.find(config.views, view => view.name === viewName);
         this.props.setView(view);
     }
 
     render() {
         return (
             <div className="ui buttons">
-                {VIEWS.map((view) =>
+                {config.views.map((view) =>
                     <button className="ui button" id={view.id} onClick={this.changeView} key={view.id}>{view.name}</button>
                 )}
             </div>

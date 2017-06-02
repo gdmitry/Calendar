@@ -10,6 +10,15 @@
    margin-bottom: "1em";
 }
 
+.navigation {
+  display: flex;
+}
+
+
+.navigation .pagination.menu{
+ margin-right: 10px;
+}
+
 #app {
   min-height: 100%;
   background: #94A1A6;

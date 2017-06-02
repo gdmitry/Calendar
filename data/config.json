@@ -1,27 +1,35 @@
 {
-    "time": {
-        "zone": "",
-        "format": "",
-        "scales": [
-            {
-                "label": "4Days",
-                "delta": 4
-            },
-            {
-                "label": "Today",
-                "delta": 1
-            },
-            {
-                "label": "Week",
-                "delta": 7
-            }
-        ]
-    },
+    "views": [
+        {
+            "id": "day",
+            "name": "Day",
+            "measure": "days",
+            "amount": 1
+        },
+        {
+            "id": "week",
+            "name": "Week",
+            "measure": "days",
+            "amount": 7
+        },
+        {
+            "id": "month",
+            "name": "Month",
+            "measure": "months",
+            "amount": 1
+        },
+        {
+            "id": "year",
+            "name": "Year",
+            "measure": "years",
+            "amount": 1
+        }
+    ],
     "events": [
         {
             "name": "Dogscience",
-            "date": "2016-01-01",
-            "startTime": "23:20",
+            "startDate": "2017-06-03",
+            "startTime": "00:00",
             "duration": "1:30"
         }
     ]

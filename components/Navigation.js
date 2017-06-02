@@ -10,25 +10,27 @@ export class Navigation extends React.Component {
 
     back(e) {
         console.log("Back: ", this.props);
-       this.props.navigate(-1);
+        this.props.navigate(-1);
     }
 
     forward(e) {
         console.log("Forward: ", this.props);
         this.props.navigate(1);
     }
-    
+
     render() {
         return (
             <div className="navigation">
                 <div className="ui pagination menu">
-                    <a className={this.props.canBack ? 'icon item' : 'icon item disabled'} onClick={this.back}>
+                    <a className='icon item' onClick={this.back}>
                         <i aria-hidden="true" className="left chevron icon"></i>
                     </a>
-                    <a className={this.props.canForward ? 'icon item' : 'icon item disabled'} onClick={this.forward}>
+                    <a className='icon item' onClick={this.forward}>
                         <i aria-hidden="true" className="right chevron icon"></i>
                     </a>
                 </div>
+                <button className="ui button" onClick={this.props.resetDate}>Today</button>
+                 <span>Date range</span>
             </div>
         );
     }
