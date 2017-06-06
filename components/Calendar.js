@@ -64,7 +64,6 @@ export class Calendar extends React.Component {
     }
 
     updateViewType(view) {
-        console.log("Change view: ", view.name);
         this.setState(function (prevState) {
             return {
                 selectedView: view,
@@ -101,8 +100,8 @@ export class Calendar extends React.Component {
                     <Navigation navigate={this.navigate} resetDate={this.setToday} />
                     <ViewControls viewId={this.state.selectedView.id} setView={this.updateViewType} />
                 </header>
-                <main>
-                    {currrentView}
+                <main style={{ position: 'relative' }}>
+                    {currrentView}                    
                 </main>
             </div>
         );

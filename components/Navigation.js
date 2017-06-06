@@ -9,12 +9,10 @@ export class Navigation extends React.Component {
     }
 
     back(e) {
-        console.log("Back: ", this.props);
         this.props.navigate(-1);
     }
 
     forward(e) {
-        console.log("Forward: ", this.props);
         this.props.navigate(1);
     }
 
@@ -30,7 +28,6 @@ export class Navigation extends React.Component {
                     </a>
                 </div>
                 <button className="ui button" onClick={this.props.resetDate}>Today</button>
-                 <span>Date range</span>
             </div>
         );
     }
