@@ -12,11 +12,6 @@ import { YearView } from "./views/YearView";
 import { Navigation } from "./Navigation";
 import { ViewControls } from "./ViewControls";
 
-const timeRange = _.chain(_.range(24))
-    .map(String)
-    .map((l) => l + ":00")
-    .value();
-
 export class Calendar extends React.Component {
     constructor(props) {
         super(props);
@@ -72,26 +67,23 @@ export class Calendar extends React.Component {
         });
     }
 
+    getViewById(id) {
+        switch (id) {
+            case 'day':
+                return <DayView startDate={this.state.date} events={this.state.activeEvents} />;
+            case 'week':
+                return <WeekView startDate={this.state.date} events={this.state.activeEvents} />;
+            case 'month':
+                return <MonthView startDate={this.state.date} events={this.state.activeEvents} />;
+            case 'year':
+                return <YearView startDate={this.state.date} events={this.state.activeEvents} />;
+            default: return '';
+        }
+    }
+
     render() {
         let currrentView;
-        let date = this.state.date.format('dddd, MMM Do, YYYY');
-
-        switch (this.state.selectedView.id) {
-            case 'day':
-                currrentView = <DayView date={date} axisX={[1]} axisY={timeRange} />;
-                break;
-            case 'week':
-                currrentView = <WeekView date={date} axisX={[1]} axisY={timeRange} />;
-                break;
-            case 'month':
-                currrentView = <MonthView date={date} axisX={[1]} axisY={timeRange} />;
-                break;
-            case 'year':
-                currrentView = <YearView date={date} axisX={[1]} axisY={timeRange} />;
-                break;
-            default:
-                currrentView = '';
-        }
+        let viewId = this.state.selectedView.id;
 
         return (
             <div className="calendar">
@@ -101,7 +93,7 @@ export class Calendar extends React.Component {
                     <ViewControls viewId={this.state.selectedView.id} setView={this.updateViewType} />
                 </header>
                 <main style={{ position: 'relative' }}>
-                    {currrentView}                    
+                    {this.getViewById(viewId)}
                 </main>
             </div>
         );
