@@ -10,9 +10,17 @@ export class Table extends React.Component {
 
     componentDidMount() {
         let cell = $('.date-point')[0];
-        this.props.onTableMountedCallback({
-            cellWidth: cell.offsetWidth,
-            cellHeight: cell.offsetHeight
+        let headerCell = $('.header-cell')[0];
+
+        this.props.onReady({
+            cell: {
+                width: cell.offsetWidth,
+                height: cell.offsetHeight
+            },
+            header: {
+                x: headerCell.offsetWidth,
+                y: headerCell.offsetHeight
+            }
         });
     }
 
@@ -25,7 +33,7 @@ export class Table extends React.Component {
             <table className="ui celled table">
                 <thead>
                     <tr>
-                        <th style={{ width: '60px' }}></th>
+                        <th className="header-cell" style={{ width: '60px' }}></th>
                         {this.props.data.header.map((name, index) => {
                             return <th className="date-point" key={index} style={styles}>{name}</th>
                         })}

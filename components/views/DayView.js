@@ -12,32 +12,48 @@ export class DayView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: [],
-            tableData: {}
+            events: []
         }
+
+        this.setTableData = this.setTableData.bind(this);
         this.renderEvents = this.renderEvents.bind(this);
-        this.setTableData = this.renderEvents.bind(this);
     }
 
-    setTableData(tableData) {
-        console.log(tableData);
-        this.setState({
-            tableData: tableData
-        });
+    componentDidMount() {
         this.renderEvents();
     }
 
-    renderEvents() {
-        if (this.props.events.length > 0) {
+    renderEvents(props) {
+        props = props || this.props;
+        console.log(props.events);
+        if (this.props.events.length) {
+            let hours = props.startDate.hours();
+            let d = this.headerCellSize.y * (hours + 1);
+            let l = this.headerCellSize.x;
+
+            var event = <Event key="cdf" top={d} left={l} />
             this.setState({
-                events: [<Event key="3" />]
+                events: [event]
             });
         } else {
             this.setState({
                 events: []
             });
         }
-    }    
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.renderEvents(nextProps);
+    }
+
+    setTableData(data) {
+        // setState will be called after componentDidMount() 
+        // so it is not an option to store tabele data
+        // set is as property
+        this.tableCellSize = data.cell;
+        this.headerCellSize = data.header;
+    }
 
     render() {
         let date = this.props.startDate.format('dddd, MMM Do, YYYY');
@@ -46,8 +62,12 @@ export class DayView extends React.Component {
             columns: timeRange,
             rows: [1]
         };
+
+        let table = <Table data={tableData} onReady={this.setTableData} />;
+        console.log(table.size);
+
         return <div>
-            <Table data={tableData} onTableMountedCallback={this.setTableData} />
+            {table}
             {this.state.events}
         </div>;
     }
