@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Event } from '../components/views/Event';
+import  Event  from '../components/Event';
 
-export class EventModel {
+export default class CalendarEventModel {
     constructor(params) {
         this.name = params.name;
         this.date = moment(params.startDate + ' ' + params.startTime, 'YYYY-MM-dd hh:mm');

@@ -22,31 +22,29 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: 'style-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: 'css-loader',
-                query: {
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]'
-                }
+                test: /\.sass$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
             }
         ]
     },
     plugins: [
         // new UglifyJSPlugin({
         //     compress: true,
-        //     sourceMap: true
+        //     sourceMap: true,
+        //     warnings: false
         // }),
         CopyWebpackPlugin([
-            { from: "./index.html" },
-            { from: "./css/*" }         
-        ])       
+            {
+                from: "./index.html"
+            }
+        ]),
+        new ExtractTextPlugin('css/styles.css')
     ],
     devtool: "source-map",
     resolve: {
-        extensions: [".js", ".json", ".jsx", ".css"]
+        extensions: [".js", ".json", ".jsx", ".sass"]
     }
 }

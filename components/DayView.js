@@ -1,14 +1,14 @@
 import React from "react";
 import _ from "lodash";
-import { Table } from "../Table";
-import { Event } from './Event';
+import  Table from "./Table";
+import  Event from './Event';
 
 const timeRange = _.chain(_.range(24))
     .map(String)
     .map((l) => l + ":00")
     .value();
 
-export class DayView extends React.Component {
+export default class DayView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,15 +46,7 @@ export class DayView extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.renderEvents(nextProps);
     }
-
-    setTableData(data) {
-        // setState will be called after componentDidMount() 
-        // so it is not an option to store tabele data
-        // set is as property
-        this.tableCellSize = data.cell;
-        this.headerCellSize = data.header;
-    }
-
+ 
     render() {
         let date = this.props.startDate.format('dddd, MMM Do, YYYY');
         let tableData = {
@@ -63,7 +55,7 @@ export class DayView extends React.Component {
             rows: [1]
         };
 
-        let table = <Table data={tableData} onReady={this.setTableData} />;
+        let table = <Table data={tableData}/>;
         console.log(table.size);
 
         return <div>

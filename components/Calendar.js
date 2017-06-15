@@ -1,20 +1,16 @@
 import React from "react";
 import moment from "moment";
 import config from "../data/config";
-import { EventModel } from "../js/EventModel";
+import CalendarEventModel from "../js/CalendarEventModel";
 
 import { Button } from 'semantic-ui-react';
-import styles from '../css/calendar.css';
+import  Navigation from "./Navigation";
 
-import { DayView } from "./views/DayView";
-import { Table } from "./Table";
-// import { WeekView } from "./views/WeekView";
-// import { MonthView } from "./views/MonthView";
-// import { YearView } from "./views/YearView";
-import { Navigation } from "./Navigation";
-import { ViewControls } from "./ViewControls";
+import DayView from "./DayView";
+import Table from "./Table";
+import ViewControls from "./ViewControls";
 
-export class Calendar extends React.Component {
+export default class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +22,6 @@ export class Calendar extends React.Component {
         this.updateViewType = this.updateViewType.bind(this);
         this.navigate = this.navigate.bind(this);
         this.setToday = this.setToday.bind(this);
-        this.setTableData = this.setTableData.bind(this);
     }
 
     navigate(steps) {
@@ -60,7 +55,7 @@ export class Calendar extends React.Component {
 
         return _.chain(config.events)
             .map((event) => {
-                return new EventModel(event);
+                return new CalendarEventModel(event);
             })
             .filter((event) => {
                 return event.date > startDate && event.date < endDate;
@@ -80,40 +75,16 @@ export class Calendar extends React.Component {
         this.setState({
             events: [event]
         });
-
-
     }
 
-    setTableData(data) {
-        // setState will be called after componentDidMount() 
-        // so it is not an option to store table data
-        // set is as property
-        this.tableCellSize = data.cell;
-        this.headerCellSize = data.header;
-    }
-
-    updateViewType(view) {
+   	updateViewType(view) {
         this.setState(function (prevState) {
             return {
                 selectedView: view,
                 activeEvents: this.processEvents(view, prevState.date)
             };
         });
-    }
-
-    getViewById(id) {
-        switch (id) {
-            case 'day':
-                return <DayView startDate={this.state.date} events={this.state.activeEvents} />;
-            // case 'week':
-            //     return <WeekView startDate={this.state.date} events={this.state.activeEvents} />;
-            // case 'month':
-            //     return <MonthView startDate={this.state.date} events={this.state.activeEvents} />;
-            // case 'year':
-            //     return <YearView startDate={this.state.date} events={this.state.activeEvents} />;
-            default: return '';
-        }
-    }
+    }   
 
     render() {
         let currrentView;
@@ -132,8 +103,6 @@ export class Calendar extends React.Component {
             rows: [1]
         };
 
-        // End table data
-
         return (
             <div className="calendar">
                 <h2 className="ui header no-anchor">Calendar</h2>
@@ -142,7 +111,7 @@ export class Calendar extends React.Component {
                     <ViewControls viewId={this.state.selectedView.id} setView={this.updateViewType} />
                 </header>
                 <main>
-                    <Table data={tableData} onReady={this.setTableData} />
+                    <Table data={tableData} />
                     {this.state.activeEvents}
                 </main>
             </div>

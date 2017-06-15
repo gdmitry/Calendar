@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Table } from '../components/Table';
+import Table from '../components/Table';
 
-export class TableModel {
+export default class TableModel {
     constructor(params) {
         this.name = params.name;
         this.date = moment(params.startDate + ' ' + params.time);

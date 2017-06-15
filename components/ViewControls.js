@@ -1,24 +1,20 @@
-import React from "react";
+import React from 'react';
 import _ from 'lodash';
 import $ from 'jquery';
-import  config  from "../data/config";
+import  config  from '../data/config';
 
-export class ViewControls extends React.Component {
+export default class ViewControls extends React.Component {
     constructor(props) {
         super(props);
-        this.changeView = this.changeView.bind(this);
-    }
+        this.changeView = this.changeView.bind(this);		
+    }   
 
-    componentDidMount() {
-        $('#' + this.props.viewId).addClass('active');
-    }
+	_getButtonClassName(id) {
+		return 'ui button ' + (this.props.viewId === id ? 'active': '');
+	}
 
-    changeView(e) {
-        let buttonElement = $(e.currentTarget);
-
-        $('.ui .button').removeClass('active');
-        buttonElement.addClass('active');
-
+    _changeView(e) {
+		let buttonElement = $(e.currentTarget);
         let viewName = buttonElement.text();
         let view = _.find(config.views, view => view.name === viewName);
         this.props.setView(view);
@@ -26,10 +22,14 @@ export class ViewControls extends React.Component {
 
     render() {
         return (
-            <div className="ui buttons">
-                {config.views.map((view) =>
-                    <button className="ui button" id={view.id} onClick={this.changeView} key={view.id}>{view.name}</button>
-                )}
+            <div className='ui buttons'>
+                {_.map(config.views, (view) => {
+                    return <button 
+					className={this._getButtonClassName(view.id)}
+					id={view.id}
+					onClick={this._changeView}
+					key={view.id}>{view.name}</button>
+				})}
             </div>
         );
     }
