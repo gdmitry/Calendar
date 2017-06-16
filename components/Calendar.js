@@ -10,6 +10,20 @@ import DayView from "./DayView";
 import Table from "./Table";
 import ViewControls from "./ViewControls";
 
+
+function filterEvents(view, startDate) {
+    let endDate = startDate.clone().add(view.amount, view.measure);
+     return _.chain(config.events)
+            .map((event) => {
+                return new CalendarEventModel(event);
+            })
+            .filter((event) => {
+                return event.date > startDate && event.date < endDate;
+            })
+            .value();
+    }
+
+
 export default class Calendar extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +36,8 @@ export default class Calendar extends React.Component {
         this.updateViewType = this.updateViewType.bind(this);
         this.navigate = this.navigate.bind(this);
         this.setToday = this.setToday.bind(this);
+        this.processEvents = this.processEvents.bind(this);
+        this.processEvents = this.processEvents.bind(this);
     }
 
     navigate(steps) {
@@ -50,18 +66,7 @@ export default class Calendar extends React.Component {
         // this.renderEvents(filtered);
     }
 
-    filterEvents(view, startDate) {
-        let endDate = startDate.clone().add(view.amount, view.measure);
-
-        return _.chain(config.events)
-            .map((event) => {
-                return new CalendarEventModel(event);
-            })
-            .filter((event) => {
-                return event.date > startDate && event.date < endDate;
-            })
-            .value();
-    }
+  
 
     renderEvents(events) {
         _.forEach(events, (event) => {

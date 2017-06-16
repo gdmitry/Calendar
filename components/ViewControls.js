@@ -6,7 +6,7 @@ import  config  from '../data/config';
 export default class ViewControls extends React.Component {
     constructor(props) {
         super(props);
-        this.changeView = this.changeView.bind(this);		
+        this._changeView = this._changeView.bind(this);		
     }   
 
 	_getButtonClassName(id) {

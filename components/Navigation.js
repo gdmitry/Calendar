@@ -3,8 +3,8 @@ import React from "react";
 export default class Navigation extends React.Component {
     constructor(props) {
         super(props);
-        this.back = this.back.bind(this);
-        this.forward = this.forward.bind(this);
+        this._back = this._back.bind(this);
+        this._forward = this._forward.bind(this);
     }
 
     _back(e) {

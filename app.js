@@ -8,3 +8,7 @@ ReactDOM.render(
   <Calendar />,
   document.getElementById('app')
 );
+
+
+var store = require('store.js');
+console.log(store.set);
