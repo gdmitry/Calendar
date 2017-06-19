@@ -61,7 +61,7 @@ export default class Calendar extends React.Component {
     }
 
     processEvents(viewId, startDate) {
-        let filtered = this.filterEvents(viewId, startDate);
+        let filtered = filterEvents(viewId, startDate);
         console.log("Filtered events: ", filtered);
         // this.renderEvents(filtered);
     }
@@ -117,6 +117,7 @@ export default class Calendar extends React.Component {
                 </header>
                 <main>
                     <Table data={tableData} />
+                    <Table className='time-table' data={tableData} />
                     {this.state.activeEvents}
                 </main>
             </div>
